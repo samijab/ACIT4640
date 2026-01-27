@@ -1,0 +1,15 @@
+#cloud-config
+users:
+  - name: web
+    primary_group: web
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXhJiEW50bivvQ7b2WtfrdTQYPBdrMajpk53ZcXEMdn acit4640-lab3-webuser
+
+packages:
+  - nginx
+  - nmap
+runcmd:
+  - systemctl enable --now nginx
