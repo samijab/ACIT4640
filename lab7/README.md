@@ -30,7 +30,7 @@ terraform plan
 terraform apply
 ```
 
-At the end of lab, don''t forget to use destroy
+At the end of lab, don't forget to use destroy
 ```bash 
 terraform destroy
 ```
