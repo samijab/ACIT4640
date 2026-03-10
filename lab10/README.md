@@ -114,7 +114,7 @@ http://<frontend_public_ip>
 
 The image below shows the frontend server successfully serving the HTML page.
 
-![Frontend Server](server-img.jpg)
+![Frontend Server](server-image.jpg)
 
 ---
 
