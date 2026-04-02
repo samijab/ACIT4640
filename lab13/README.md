@@ -26,5 +26,3 @@ No. The lock file is temporary. Terraform automatically removes it from the S3 b
 
 ### Lock file and state file
 ![Lock file](lock-file.png)
-```
-
