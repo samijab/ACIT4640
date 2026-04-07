@@ -1,28 +1,40 @@
-# Terraform S3 Backend Lab
+# 4640 Make Up Lab
 
-## Setup
-Cloned the starter repository and familiarized myself with the scripts and Terraform configuration.
+## Initial Setup 
 
-Created an S3 bucket using the provided script:
-```
-./create-bucket sami-terraform-backend-bucket-2026
-```
+- Copy git repo 
+- cd into it 
+- examine file structure and cat files
 
-## Questions
+## terraform plan errors
 
-### When is the state file created?
-The state file is created in the S3 bucket after `terraform apply` completes successfully.
+Ran `terraform plan` and got 6 errors right away:
 
-### When is the lock file present?
-The lock file is present during the execution of `terraform apply`. From the moment the command runs until it completes. To see it, refresh the S3 console after running `terraform apply` but before typing `yes`.
+![terraform plan showing 6 errors](terraform-plan-errors.png)
 
-### Is the lock file always in the bucket after it is created?
-No. The lock file is temporary. Terraform automatically removes it from the S3 bucket once the operation completes. It only persists if a Terraform run is interrupted or crashes.
+## what I fixed
 
-## Screenshots
+**Error 1 & 2: `route_tble_id` (line 73)**
+These two errors are actually the same problem. `route_tble_id` is a typo, should be `route_table_id`. Because terraform didn't recognize the misspelled argument, it also complained that the required `route_table_id` was missing. One fix, two errors gone.
 
-### State file only
-![State file](state-file.png)
+**Error 3:  `subnt_id` (line 80)**
+`subnt_id` should be `subnet_id` in the route table association block.
 
-### Lock file and state file
-![Lock file](lock-file.png)
+**Error 4:  `from_prt` (line 112)**
+`from_prt` should be `from_port` in the http ingress rule.
+
+**Error 5: wrong file path (line 134)**
+The path to cloud-init.yaml said `module/scripts/cloud-init.yaml` but the folder is just `scripts/`, not `module/scripts/`. Removed the extra `module/` from the path.
+
+**Error 6: `aws_sbnet` (line 137)**
+`aws_sbnet.web.id` is a typo, should be `aws_subnet.web.id`.
+
+## working plan and apply
+
+After all the fixes, `terraform plan` worked:
+
+![terraform plan working](terraform-plan.png)
+
+And `terraform apply` created everything fine:
+
+![terraform apply working](terraform-apply.png)
